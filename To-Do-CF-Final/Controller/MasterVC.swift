@@ -22,7 +22,7 @@ class MasterVC: UIViewController, UITableViewDataSource, UITableViewDelegate, NS
         tableView.delegate = self
         tableView.dataSource = self
         let fetchRequest = NSFetchRequest<Task>(entityName: "Task")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "rank", ascending: true)]
         frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc?.delegate = self
         do {
@@ -53,6 +53,35 @@ class MasterVC: UIViewController, UITableViewDataSource, UITableViewDelegate, NS
         let cell = UITableViewCell()
         cell.textLabel?.text = task.title
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard let frc = frc else {
+            fatalError("Failed to load fetched results controller")
+        }
+        let task = frc.object(at: sourceIndexPath)
+        var taskArray : [Task] = frc.fetchedObjects!
+        taskArray.remove(at: sourceIndexPath.row)
+        taskArray.insert(task, at: destinationIndexPath.row)
+        var i : Int32 = 1
+        for task in taskArray {
+            task.rank = i
+            i += 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        guard let frc = frc else {
+            fatalError("Failed to load fetched results controller")
+        }
+        let object = frc.object(at: indexPath)
+        context.delete(object)
+        
+
     }
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -92,9 +121,13 @@ class MasterVC: UIViewController, UITableViewDataSource, UITableViewDelegate, NS
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+        TaskData.saveContext()
     }
     
-
+    @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
+        tableView.isEditing = !tableView.isEditing
+    }
+    
 
 }
 
