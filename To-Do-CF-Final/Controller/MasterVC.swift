@@ -9,20 +9,30 @@
 import UIKit
 import CoreData
 
-class MasterVC: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class MasterVC: UIViewController {
 
     let context = TaskData.persistentContainer.viewContext
     var tasks = [Task]()
     var frc : NSFetchedResultsController<Task>?
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        segmentControlValueChange(self)
+        
+    }
+    
+    @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
+        tableView.isEditing = !tableView.isEditing
+    }
+    
+    func fetchAndLoadData(sortDescriptor: NSSortDescriptor){
         let fetchRequest = NSFetchRequest<Task>(entityName: "Task")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "rank", ascending: true)]
+        fetchRequest.sortDescriptors = [sortDescriptor]
         frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc?.delegate = self
         do {
@@ -30,17 +40,29 @@ class MasterVC: UIViewController, UITableViewDataSource, UITableViewDelegate, NS
         } catch {
             print("Error fetching")
         }
-        
+        tableView.reloadData()  
     }
-    
+    @IBAction func segmentControlValueChange(_ sender: Any) {
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
+            fetchAndLoadData(sortDescriptor: NSSortDescriptor(key: "created", ascending: true))
+        }
+        if segmentedControl.selectedSegmentIndex == 1 {
+            fetchAndLoadData(sortDescriptor: NSSortDescriptor(key: "rank", ascending: true))
+        }
+        if segmentedControl.selectedSegmentIndex == 2 {
+            fetchAndLoadData(sortDescriptor: NSSortDescriptor(key: "title", ascending: true))
+        }
+    }
+}
+
+extension MasterVC : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         guard let sectionInfo = frc?.sections?[section] else {
             fatalError("Failed to load fetched results controller")
         }
-        
         return sectionInfo.numberOfObjects
-
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,10 +102,11 @@ class MasterVC: UIViewController, UITableViewDataSource, UITableViewDelegate, NS
         }
         let object = frc.object(at: indexPath)
         context.delete(object)
-        
-
     }
+}
 
+extension MasterVC : NSFetchedResultsControllerDelegate {
+    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
@@ -123,11 +146,5 @@ class MasterVC: UIViewController, UITableViewDataSource, UITableViewDelegate, NS
         tableView.endUpdates()
         TaskData.saveContext()
     }
-    
-    @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
-        tableView.isEditing = !tableView.isEditing
-    }
-    
-
 }
 

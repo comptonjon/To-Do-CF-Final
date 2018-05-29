@@ -37,12 +37,6 @@ class DetailVC: UIViewController {
         } catch {
             print("Error")
         }
-        do {
-            try context.save()
-        } catch {
-            print("Error saving")
-        }
-        
         
     }
     
