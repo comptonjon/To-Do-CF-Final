@@ -15,6 +15,7 @@
 		B158A86E20BB5E3100F5529A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B158A86C20BB5E3100F5529A /* LaunchScreen.storyboard */; };
 		B158A87920BB616600F5529A /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158A87820BB616600F5529A /* DetailVC.swift */; };
 		B158A87C20BB631F00F5529A /* TaskData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158A87B20BB631F00F5529A /* TaskData.swift */; };
+		B1DAEE3620BE0A81002E3B17 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DAEE3520BE0A81002E3B17 /* TaskCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		B158A86F20BB5E3100F5529A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B158A87820BB616600F5529A /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		B158A87B20BB631F00F5529A /* TaskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskData.swift; sourceTree = "<group>"; };
+		B1DAEE3520BE0A81002E3B17 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				B158A86A20BB5E3100F5529A /* Assets.xcassets */,
 				B158A86420BB5E3000F5529A /* Main.storyboard */,
 				B158A86C20BB5E3100F5529A /* LaunchScreen.storyboard */,
+				B1DAEE3520BE0A81002E3B17 /* TaskCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				B158A86320BB5E3000F5529A /* MasterVC.swift in Sources */,
 				B158A87920BB616600F5529A /* DetailVC.swift in Sources */,
 				B158A86120BB5E3000F5529A /* AppDelegate.swift in Sources */,
+				B1DAEE3620BE0A81002E3B17 /* TaskCell.swift in Sources */,
 				B158A86920BB5E3000F5529A /* To_Do_CF_Final.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

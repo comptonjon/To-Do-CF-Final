@@ -14,6 +14,7 @@ class MasterVC: UIViewController {
     let context = TaskData.persistentContainer.viewContext
     var tasks = [Task]()
     var frc : NSFetchedResultsController<Task>?
+    var detailVC : DetailVC?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -23,6 +24,7 @@ class MasterVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         segmentControlValueChange(self)
+        detailVC = (self.splitViewController?.viewControllers.last! as! UINavigationController).topViewController as! DetailVC
         
     }
     
@@ -42,6 +44,20 @@ class MasterVC: UIViewController {
         }
         tableView.reloadData()  
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toEditTask" {
+            if let indexPath = self.tableView.indexPathForSelectedRow{
+                let destinationNC = segue.destination as! UINavigationController
+                let destinationVC = destinationNC.topViewController as! DetailVC
+                detailVC = destinationVC
+                destinationVC.task = frc?.object(at: indexPath)
+            }
+            
+            
+        }
+    }
+    
     @IBAction func segmentControlValueChange(_ sender: Any) {
         
         if segmentedControl.selectedSegmentIndex == 0 {
@@ -72,8 +88,14 @@ extension MasterVC : UITableViewDataSource, UITableViewDelegate {
         }
         
         let task = frc.object(at: indexPath)
-        let cell = UITableViewCell()
-        cell.textLabel?.text = task.title
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskCell
+        cell.titleLabel.text = task.title
+        if segmentedControl.selectedSegmentIndex == 1 {
+            cell.rankLabel.text = String(task.rank)
+        } else {
+            cell.rankLabel.text = ""
+        }
+        
         return cell
     }
     
@@ -101,6 +123,7 @@ extension MasterVC : UITableViewDataSource, UITableViewDelegate {
             fatalError("Failed to load fetched results controller")
         }
         let object = frc.object(at: indexPath)
+        detailVC!.checkTask(task: object)
         context.delete(object)
     }
 }
