@@ -206,15 +206,27 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="***Error: Enter Title AND Details***" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzm-Gr-uav">
+                                <rect key="frame" x="20" y="468" width="374" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="Cgy-58-pdM"/>
+                                    <constraint firstAttribute="width" constant="374" id="Z4Z-qd-JQm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="fzm-Gr-uav" firstAttribute="leading" secondItem="7gl-8A-TX9" secondAttribute="leading" constant="20" id="2JY-Pb-TXQ"/>
                             <constraint firstItem="7gl-8A-TX9" firstAttribute="bottom" secondItem="f6p-4f-aMC" secondAttribute="bottom" constant="100" id="4fo-Nm-8Zp"/>
                             <constraint firstItem="7gl-8A-TX9" firstAttribute="trailing" secondItem="gMc-zW-rhW" secondAttribute="trailing" constant="20" id="4rH-bq-zG8"/>
                             <constraint firstItem="4HT-Cu-smN" firstAttribute="leading" secondItem="7gl-8A-TX9" secondAttribute="leading" constant="20" id="5MR-L8-Pky"/>
                             <constraint firstItem="eaV-vw-zKq" firstAttribute="leading" secondItem="7gl-8A-TX9" secondAttribute="leading" constant="20" id="74A-2D-STa"/>
                             <constraint firstItem="m5k-0r-nnQ" firstAttribute="top" secondItem="gMc-zW-rhW" secondAttribute="bottom" constant="200" id="EWQ-ie-hsb"/>
                             <constraint firstItem="7gl-8A-TX9" firstAttribute="bottom" secondItem="f6p-4f-aMC" secondAttribute="bottom" constant="20" id="GEv-sS-gOo"/>
+                            <constraint firstItem="fzm-Gr-uav" firstAttribute="top" secondItem="4HT-Cu-smN" secondAttribute="bottom" constant="24" id="H35-S9-Pt4"/>
                             <constraint firstItem="7gl-8A-TX9" firstAttribute="trailing" secondItem="4HT-Cu-smN" secondAttribute="trailing" constant="20" id="KDy-oA-S1J"/>
                             <constraint firstItem="7gl-8A-TX9" firstAttribute="trailing" secondItem="eaV-vw-zKq" secondAttribute="trailing" constant="20" id="L79-UL-mGv"/>
                             <constraint firstItem="gMc-zW-rhW" firstAttribute="leading" secondItem="7gl-8A-TX9" secondAttribute="leading" constant="20" id="WSt-J9-sFR"/>
@@ -253,7 +265,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="OlH-Jw-YyL"/>
                     <connections>
+                        <outlet property="clearDetailButton" destination="4HT-Cu-smN" id="su8-bK-4dM"/>
+                        <outlet property="clearTitleButton" destination="m5k-0r-nnQ" id="pMd-oY-i4A"/>
                         <outlet property="detailTextView" destination="eaV-vw-zKq" id="fy7-WJ-s0k"/>
+                        <outlet property="errorLabel" destination="fzm-Gr-uav" id="szc-dQ-7Eu"/>
                         <outlet property="titleTextView" destination="gMc-zW-rhW" id="ZRJ-5l-gOc"/>
                     </connections>
                 </viewController>
